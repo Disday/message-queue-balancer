@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  main-app:
+    build:
+      context: ./apps/main
+      # dockerfile: ./apps/main/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/main:/app
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  notifier:
+    build:
+      context: ./apps/notifier
+      # dockerfile: ./apps/main/Dockerfile
+    volumes:
+      - ./apps/notifier:/app
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  receiver:
+    build:
+      context: ./apps/receiver
+      # dockerfile: ./apps/main/Dockerfile
+    volumes:
+      - ./apps/receiver:/app
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+      interval: 3s
+      timeout: 5s
+      retries: 2
+
+  
