@@ -1,6 +1,5 @@
 {
   "name": "@mqb/libs",
   "private": true,
-  "main": "dist/index.js",
-  "types": "dist/index.d.js"
+  "main": "dist/index.js"
 }
