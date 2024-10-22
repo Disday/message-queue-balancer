@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { AppService } from './app.service';
+import { HttpExceptionFilter } from './app.filter';
+// import { HttpExceptionFilter } from './app.filter';
 
 async function bootstrap() {
   // const rmq = 'rabbitmq';
@@ -18,6 +19,8 @@ async function bootstrap() {
       },
     },
   );
+
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen();
 

@@ -7,10 +7,14 @@ import { log } from 'console';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('/')
-  getHello() {
-    // throw new BadRequestException();
-    return this.appService.publish();
+  @Get('/start')
+  start() {
+    return this.appService.start();
+  }
+
+  @Get('/stop')
+  stop() {
+    return this.appService.stop();
   }
 
   // @EventPattern('bus') stub() {}
