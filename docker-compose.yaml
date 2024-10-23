@@ -1,52 +1,51 @@
-version: "3"
-
 services:
-  # main-app:
-  #   build:
-  #     context: ./apps/main
-  #     # dockerfile: ./apps/main/Dockerfile
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./apps/main:/app
-  #   restart: on-failure
-  #   depends_on:
-  #     rabbitmq:
-  #       condition: service_healthy
+  
+  main:
+    build:
+      context: .
+      dockerfile: ./apps/main/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/main:/usr/src/app/apps/main
+      - /usr/src/app/apps/main/node_modules
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
 
   notifier:
     build:
-      context: ./apps/notifier
-      # dockerfile: ./apps/main/Dockerfile
+      context: .
+      dockerfile: ./apps/notifier/Dockerfile
     # ports:
       # - "4000:4000"
     volumes:
-      - ./apps/notifier:/app
-    # depends_on:
-    #   rabbitmq:
-    #     condition: service_healthy
+      - ./apps/notifier:/usr/src/app/apps/notifier
+      - /usr/src/app/apps/notifier/node_modules
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
 
-  # receiver:
-  #   build:
-  #     context: ./apps/receiver
-  #     # dockerfile: ./apps/main/Dockerfile
-  #   ports:
-  #     - "4000:4000"
-  #   volumes:
-  #     - ./apps/receiver:/app
-  #   depends_on:
-  #     rabbitmq:
-  #       condition: service_healthy
+  receiver:
+    build:
+      context: .
+      dockerfile: ./apps/receiver/Dockerfile
+    volumes:
+      - ./apps/receiver:/usr/src/app/apps/receiver
+      - /usr/src/app/apps/receiver/node_modules
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
 
-  # rabbitmq:
-  #   image: rabbitmq:4-management-alpine
-  #   ports:
-  #       - "5672:5672"
-  #       - "15672:15672"
-  #   healthcheck:
-  #     test: [ "CMD", "nc", "-z", "localhost", "5672" ]
-  #     interval: 3s
-  #     timeout: 5s
-  #     retries: 2
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+      interval: 3s
+      timeout: 5s
+      retries: 5
 
   

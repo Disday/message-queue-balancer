@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy, Ctx, EventPattern, Payload } from '@nestjs/microservices';
-import { log } from 'console';
+import { log } from 'node:console';
 
 @Injectable()
 export class AppService {
@@ -13,7 +13,7 @@ export class AppService {
   //   // business logic
   // }
 
-  async publish() {
+  async start() {
     let counter = 0;
 
     setInterval(() => {

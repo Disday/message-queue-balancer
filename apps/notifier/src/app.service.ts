@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { AxiosError } from 'axios';
-import { log } from 'console';
+import { AxiosError, AxiosResponse } from 'axios';
+import { log } from 'node:console';
 import { catchError, EMPTY, firstValueFrom, ObservableInput, of } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { Message } from '@mqb/libs/src/message.interface';
+
+// type AxiosErrorWithMessage = Required<
+//   Pick<AxiosError<{ message: string }>, 'response'>
+// >;
+// type AxiosErrorWithMessage = Required<AxiosError<unknown>>;
 
 @Injectable()
 export class NotificationService {
@@ -12,18 +17,18 @@ export class NotificationService {
 
   constructor(private readonly http: HttpService) {}
 
-  async notify(message: Message): Promise<any> {
-    const { data: response } = await firstValueFrom(
+  async notify(message: Message): Promise<unknown> {
+    const response = await firstValueFrom(
       this.http.post(this.receiverUrl, message).pipe(
-        catchError((error: Required<Pick<AxiosError<any>, 'response'>>) => {
+        catchError((error: AxiosError) => {
           throw new RpcException(
-            `${message.id} - !ERROR: Receiver responded ${error.response.data.message}`,
+            `${message.id} - !ERROR: Receiver responded ${error.message}`,
           );
         }),
       ),
     );
 
     // log(response);
-    return response;
+    return response.data;
   }
 }

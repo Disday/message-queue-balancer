@@ -1,7 +1,7 @@
 import { Controller, UseFilters } from '@nestjs/common';
 import { Ctx, EventPattern, Payload } from '@nestjs/microservices';
 import { NotificationService } from './app.service';
-import { log } from 'console';
+import { log } from 'node:console';
 
 @Controller()
 export class AppController {

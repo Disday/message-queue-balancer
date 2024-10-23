@@ -1,20 +1,16 @@
 FROM node:22
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
-# Set the working directory inside the container
-WORKDIR /app
+WORKDIR /usr/src/app
+COPY package.json pnpm-workspace.yaml tsconfig.json ./
+COPY libs libs
+COPY apps/receiver apps/receiver
 
-# Copy package.json and package-lock.json to the container
-# COPY package.json ./
-COPY . .
-# COPY tsconfig.json ./
+WORKDIR /usr/src/app/apps/receiver
 
-# Install project dependencies
-RUN npm install
-
-# Copy the rest of the application source code to the container
-
-# Expose the port your Nest.js application is listening on
+RUN pnpm install --prod
+RUN pnpm build
 # EXPOSE 3000
-
-# Command to start your Nest.js application
 CMD [ "npm", "run", "start:debug" ]
