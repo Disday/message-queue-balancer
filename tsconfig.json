@@ -8,13 +8,12 @@
     "target": "ES2017",
     "strict": true,
     "noImplicitAny": true,
-    // "strictNullChecks": false,
+    "strictNullChecks": true,
     "sourceMap": true,
     "skipLibCheck": true,
     "composite": true,
     "incremental": true,
-    // "baseUrl": "./",
-    // "outDir": "."
+    "strictPropertyInitialization": false,
   },
   "references": [
     {

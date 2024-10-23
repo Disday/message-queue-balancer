@@ -10,7 +10,7 @@ COPY apps/main apps/main
 
 WORKDIR /usr/src/app/apps/main
 
-RUN pnpm install --prod
+RUN pnpm install
 RUN pnpm build
 # EXPOSE 3000
 CMD [ "npm", "run", "start:debug" ]

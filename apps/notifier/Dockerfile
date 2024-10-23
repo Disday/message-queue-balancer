@@ -10,7 +10,7 @@ COPY apps/notifier apps/notifier
 
 WORKDIR /usr/src/app/apps/notifier
 
-RUN pnpm install --prod
+RUN pnpm install
 RUN pnpm build
 # EXPOSE 3000
 CMD [ "npm", "run", "start:debug" ]

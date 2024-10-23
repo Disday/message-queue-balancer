@@ -8,7 +8,9 @@ services:
       - "3000:3000"
     volumes:
       - ./apps/main:/usr/src/app/apps/main
-      - /usr/src/app/apps/main/node_modules
+      - ./tsconfig.json:/usr/src/app/tsconfig.json
+      # - /usr/src/app/apps/main/node_modules
+      # - /usr/src/app/apps/main/dist
     depends_on:
       rabbitmq:
         condition: service_healthy
