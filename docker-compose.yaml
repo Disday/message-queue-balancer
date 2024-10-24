@@ -9,7 +9,7 @@ services:
     volumes:
       - ./apps/main:/usr/src/app/apps/main
       - ./tsconfig.json:/usr/src/app/tsconfig.json
-      # - /usr/src/app/apps/main/node_modules
+      - /usr/src/app/apps/main/node_modules
       # - /usr/src/app/apps/main/dist
     depends_on:
       rabbitmq:

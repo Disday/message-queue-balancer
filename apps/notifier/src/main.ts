@@ -11,11 +11,12 @@ async function bootstrap() {
     {
       transport: Transport.RMQ,
       options: {
-        urls: [`amqp://rabbitmq:5672`],
         queue: 'bus',
+        urls: [`amqp://rabbitmq:5672`],
         queueOptions: {
-          durable: false,
+          durable: true,
         },
+        noAck: false,
       },
     },
   );

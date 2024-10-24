@@ -17,10 +17,10 @@
   },
   "references": [
     {
-      "path": "apps/*"
+      "path": "./apps/*"
     },
     {
-      "path": "libs/"
+      "path": "./libs"
     }
   ]
 }

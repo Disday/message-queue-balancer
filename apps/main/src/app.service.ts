@@ -1,5 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientProxy, Ctx, EventPattern, Payload } from '@nestjs/microservices';
+import {
+  ClientProxy,
+  Ctx,
+  EventPattern,
+  Payload,
+  RmqRecordBuilder,
+} from '@nestjs/microservices';
 import { log } from 'node:console';
 import { Message } from '@mqb/libs/src/message.interface';
 
@@ -13,11 +19,19 @@ export class AppService {
   ) {}
 
   start() {
+    // const message: Message = { id: this.messageCount };
+
+    const record = new RmqRecordBuilder<Message>({ id: this.messageCount })
+      .setOptions({
+        persistent: true,
+        priority: 1,
+      })
+      .build();
+
     this.timeout = setInterval(() => {
       this.messageCount += 1;
-      const message: Message = { id: this.messageCount };
 
-      this.notificationService.emit('bus', message);
+      this.notificationService.emit('bus', record);
 
       log(`${this.messageCount} - Main sent message`);
     }, 2000);

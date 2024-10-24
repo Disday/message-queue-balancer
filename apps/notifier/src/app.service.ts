@@ -22,7 +22,7 @@ export class NotificationService {
       this.http.post(this.receiverUrl, message).pipe(
         catchError((error: AxiosError) => {
           throw new RpcException(
-            `${message.id} - !ERROR: Receiver responded ${error.message}`,
+            `${message.id} - !ERROR: Receiver responded '${error.message}'`,
           );
         }),
       ),

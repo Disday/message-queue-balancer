@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-// const rmq = 'rabbitmq';
 @Module({
   imports: [
     ClientsModule.register([
@@ -15,7 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
           urls: [`amqp://rabbitmq:5672`],
           queue: 'bus',
           queueOptions: {
-            durable: false,
+            durable: true,
           },
           noAck: true,
         },
