@@ -10,7 +10,7 @@ import { log } from 'node:console';
 import { Message } from '@mqb/libs/src/message.interface';
 
 @Injectable()
-export class AppService {
+export class SenderService {
   private messageCount = 0;
   private timeout: NodeJS.Timeout;
 

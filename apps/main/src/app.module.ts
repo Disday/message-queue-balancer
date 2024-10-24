@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SenderController } from './sender.controller';
+import { SenderService } from './sender.service';
 
 @Module({
   imports: [
@@ -47,7 +47,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     //   },
     // }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [SenderController],
+  providers: [SenderService],
 })
 export class AppModule {}

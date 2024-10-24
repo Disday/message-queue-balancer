@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { AppService } from './app.service';
+import { SenderService } from './sender.service';
 
 async function bootstrap() {
   // const rmq = 'rabbitmq';
@@ -22,7 +22,7 @@ async function bootstrap() {
   await app.startAllMicroservices();
   await app.listen(3000);
 
-  app.get(AppService).start();
+  app.get(SenderService).start();
 }
 
 bootstrap();

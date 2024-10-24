@@ -1,11 +1,11 @@
 import { Controller, UseFilters } from '@nestjs/common';
 import { Ctx, EventPattern, Payload, RmqContext } from '@nestjs/microservices';
-import { NotificationService } from './app.service';
 import { log } from 'node:console';
 import { Message } from '@mqb/libs/src/message.interface';
+import { NotificationService } from './notification.service';
 
 @Controller()
-export class AppController {
+export class NotificationController {
   constructor(private readonly notificationService: NotificationService) {}
 
   // @UseFilters(new Filter())
