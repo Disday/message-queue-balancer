@@ -3,10 +3,13 @@
   "compilerOptions": {
     "outDir": "./dist",
     "baseUrl": "./",
-    "rootDir": "./src"
+    "rootDirs": [
+      "./src",
+      "../../libs/src",
+      // "../../libs"
+    ]
   },
-  "exclude": [
-    "./dist",
-    "./test"
-  ]
+  // "include": [
+  //   "../../libs/src/**/*"
+  // ]
 }

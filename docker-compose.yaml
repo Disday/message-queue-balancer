@@ -1,5 +1,4 @@
 services:
-  
   main:
     build:
       context: .
@@ -7,10 +6,12 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./apps/main:/usr/src/app/apps/main
-      - ./tsconfig.json:/usr/src/app/tsconfig.json
-      - /usr/src/app/apps/main/node_modules
+      # - ./apps/main :/usr/src/app/apps/main
+      - ./libs:/usr/src/app/libs
+      # - ./tsconfig.json:/usr/src/app/tsconfig.json
+      # - /usr/src/app/apps/main/node_modules
       # - /usr/src/app/apps/main/dist
+    # command: tail -F 'asd'
     depends_on:
       rabbitmq:
         condition: service_healthy

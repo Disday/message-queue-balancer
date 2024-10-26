@@ -3,6 +3,7 @@ import { Ctx, EventPattern, Payload, RmqContext } from '@nestjs/microservices';
 import { log } from 'node:console';
 import { SenderService } from './sender.service';
 
+
 @Controller()
 export class SenderController {
   constructor(private readonly appService: SenderService) {}

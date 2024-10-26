@@ -1,44 +1,52 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
   ClientProxy,
-  Ctx,
-  EventPattern,
-  Payload,
+  RmqRecord,
   RmqRecordBuilder,
 } from '@nestjs/microservices';
 import { log } from 'node:console';
 import { Message } from '@mqb/libs/src/message.interface';
+import { LoggerService } from '@mqb/libs/dist/logger.service';
 
 @Injectable()
 export class SenderService {
   private messageCount = 0;
   private timeout: NodeJS.Timeout;
 
-  constructor(
-    @Inject('NOTIFICATION_SERVICE') private notificationService: ClientProxy,
-  ) {}
+  constructor(@Inject('RMQ') private rmqService: ClientProxy) {}
 
   start() {
-    // const message: Message = { id: this.messageCount };
+    // new LoggerService().log1('Main service started');
 
-    const record = new RmqRecordBuilder<Message>({ id: this.messageCount })
-      .setOptions({
-        persistent: true,
-        priority: 1,
-      })
-      .build();
-
-    this.timeout = setInterval(() => {
-      this.messageCount += 1;
-
-      this.notificationService.emit('bus', record);
-
-      log(`${this.messageCount} - Main sent message`);
-    }, 2000);
+    this.timeout = setInterval(() => this.send(), 2000);
   }
 
   stop() {
     clearInterval(this.timeout);
+    this.messageCount = 0;
+  }
+
+  private send() {
+    this.messageCount += 1;
+
+    // if (this.messageCount === 5) {
+    //   return this.stop();
+    // }
+
+    const message: Message = { id: this.messageCount };
+
+    const record: RmqRecord = new RmqRecordBuilder(message)
+      .setOptions({
+        priority: 1,
+        // persistent: true,
+      })
+      .build();
+
+    this.rmqService.emit('bus', record);
+
+    const logger = new LoggerService();
+    logger.log(message);
+    log(`${message.id} - Main sent message`);
   }
 
   // @EventPattern('user_created')

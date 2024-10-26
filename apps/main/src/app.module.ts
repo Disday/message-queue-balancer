@@ -8,44 +8,19 @@ import { SenderService } from './sender.service';
   imports: [
     ClientsModule.register([
       {
-        name: 'NOTIFICATION_SERVICE',
+        name: 'RMQ',
         transport: Transport.RMQ,
         options: {
           urls: [`amqp://rabbitmq:5672`],
           queue: 'bus',
+          prefetchCount: 1,
           queueOptions: {
-            durable: true,
+            durable: false,
           },
           noAck: true,
         },
       },
     ]),
-    // TypeOrmModule.forRoot({
-    //   type: 'mysql',
-    //   host: 'localhost',
-    //   port: 3306,
-    //   username: 'root',
-    //   password: 'root',
-    //   database: 'test',
-    //   // entities: [User],
-    //   autoLoadEntities: true,
-    //   synchronize: true,
-    // }),
-    // TypeOrmModule.forRootAsync({
-    //   useFactory() {
-    //     return AppDataSource.options as TypeOrmModuleOptions;
-    //   },
-    //   async dataSourceFactory(options) {
-    //     if (!options) {
-    //       throw new Error('Invalid options passed');
-    //     }
-
-    //     return (
-    //       getDataSourceByName('default') ||
-    //       addTransactionalDataSource(new DataSource(options))
-    //     );
-    //   },
-    // }),
   ],
   controllers: [SenderController],
   providers: [SenderService],

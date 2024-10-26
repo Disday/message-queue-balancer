@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { HttpExceptionFilter } from './app.filter';
+// import { HttpExceptionFilter } from './app.filter';
 // import { HttpExceptionFilter } from './app.filter';
 
 async function bootstrap() {
@@ -11,17 +11,19 @@ async function bootstrap() {
     {
       transport: Transport.RMQ,
       options: {
-        queue: 'bus',
         urls: [`amqp://rabbitmq:5672`],
+        queue: 'bus',
+        prefetchCount: 1,
+        consumerTag: 'notifier-service',
         queueOptions: {
-          durable: true,
+          durable: false,
         },
         noAck: false,
       },
     },
   );
 
-  app.useGlobalFilters(new HttpExceptionFilter());
+  // app.useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen();
 

@@ -1,5 +1,10 @@
 {
   "name": "@mqb/libs",
-  "private": true,
-  "main": "dist/index.js"
+  "version": "0.0.1",
+  "scripts": {
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "build": "pnpm clean && tsc --incremental",
+    "start:dev": "tsc -w --incremental",
+    "build:watch": "tsc -w --preserveWatchOutput"
+  }
 }

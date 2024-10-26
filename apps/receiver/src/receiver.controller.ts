@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { Ctx, EventPattern, Payload } from '@nestjs/microservices';
 import { log } from 'console';
 import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
@@ -10,6 +17,7 @@ export class ReceiverController {
   private messageCount = 0;
 
   @Post()
+  @HttpCode(200)
   post(@Body() message: Message) {
     this.messageCount += 1;
 
