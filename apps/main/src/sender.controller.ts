@@ -13,7 +13,7 @@ export class SenderController {
   }
 
   @Get('/stop')
-  stop() { 
+  stop() {
     return this.appService.stop();
   }
 

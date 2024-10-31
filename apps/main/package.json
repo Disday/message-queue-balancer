@@ -10,7 +10,7 @@
     "buildLibs": "tsc -b && node dist/main",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "tsc-watch --onSuccess \"pnpm buildLibs\"",
+    "start:dev": "tsc-watch --onCompilationComplete \"pnpm buildLibs\"",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/apps/main/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

@@ -1,6 +1,5 @@
 export class LoggerService {
-  log(arg: unknown) {
-    console.log('123');
-    console.log(arg);
+  log(message: string, traceId?: number) {
+    console.log(`${traceId}: ${message}`);
   }
 }

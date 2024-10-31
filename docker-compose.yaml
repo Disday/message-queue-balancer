@@ -6,12 +6,10 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      # - ./apps/main :/usr/src/app/apps/main
+      - ./apps/main:/usr/src/app/apps/main
       - ./libs:/usr/src/app/libs
-      # - ./tsconfig.json:/usr/src/app/tsconfig.json
-      # - /usr/src/app/apps/main/node_modules
-      # - /usr/src/app/apps/main/dist
     # command: tail -F 'asd'
+    entrypoint: bash -c "pnpm i && pnpm start:dev"
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -24,7 +22,8 @@ services:
       # - "4000:4000"
     volumes:
       - ./apps/notifier:/usr/src/app/apps/notifier
-      - /usr/src/app/apps/notifier/node_modules
+      - ./libs:/usr/src/app/libs
+    entrypoint: bash -c "pnpm i && pnpm start:dev"
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -36,6 +35,7 @@ services:
     volumes:
       - ./apps/receiver:/usr/src/app/apps/receiver
       - /usr/src/app/apps/receiver/node_modules
+    entrypoint: bash -c "pnpm i && pnpm start:dev"
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -50,5 +50,3 @@ services:
       interval: 3s
       timeout: 5s
       retries: 5
-
-  

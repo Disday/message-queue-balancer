@@ -45,8 +45,8 @@ export class SenderService {
     this.rmqService.emit('bus', record);
 
     const logger = new LoggerService();
-    // logger.log(11 + 'asd');
-    log(`${message.id} - Main sent message`);
+    logger.log('Main sent message', message.id);
+    // log(`${message.id} - Main sent message`);
   }
 
   // @EventPattern('user_created')
