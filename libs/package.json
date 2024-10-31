@@ -1,10 +1,12 @@
 {
   "name": "@mqb/libs",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "build": "pnpm clean && tsc --incremental",
-    "start:dev": "tsc -w --incremental",
-    "build:watch": "tsc -w --preserveWatchOutput"
+    "build": "tsc-watch --onSuccess \" \"",
+    "start:dev": "tsc -w --incremental"
+  },
+  "devDependencies": {
+    "tsc-watch": "^6.2.0"
   }
 }

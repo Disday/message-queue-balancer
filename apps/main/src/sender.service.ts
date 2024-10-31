@@ -45,7 +45,7 @@ export class SenderService {
     this.rmqService.emit('bus', record);
 
     const logger = new LoggerService();
-    logger.log(message);
+    // logger.log(11 + 'asd');
     log(`${message.id} - Main sent message`);
   }
 

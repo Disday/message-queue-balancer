@@ -10,17 +10,10 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "sourceMap": true,
+    "declaration": true,
     "skipLibCheck": true,
-    "composite": true,
+    // "composite": true,
     "incremental": true,
     "strictPropertyInitialization": false,
   },
-  "references": [
-    {
-      "path": "./apps/*"
-    },
-    {
-      "path": "./libs"
-    }
-  ]
 }
