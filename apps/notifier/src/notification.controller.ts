@@ -1,32 +1,23 @@
-import { Controller, HttpStatus, Inject, UseGuards } from '@nestjs/common';
-import {
-  ClientProxy,
-  ClientRMQ,
-  Ctx,
-  EventPattern,
-  Payload,
-  RmqContext,
-  RmqRecord,
-} from '@nestjs/microservices';
-import { log } from 'node:console';
+import { Controller, HttpStatus } from '@nestjs/common';
+import { Ctx, EventPattern, Payload, RmqContext } from '@nestjs/microservices';
 import { Message } from '@mqb/libs/src/message.interface';
 import { NotificationService } from './notification.service';
 import { ChannelWrapper } from 'amqp-connection-manager';
-import { ThrottlerGuard } from '@nestjs/throttler';
+import { LoggerService } from '@mqb/libs/dist/logger.service';
 
 @Controller()
 export class NotificationController {
   // private readonly channel: ChannelWrapper;
-  // private readonly rmqMessage: unknown;
 
   constructor(
     // @Inject('RMQ') private rmqService: ClientRMQ,
+    private readonly logger: LoggerService,
     private readonly notificationService: NotificationService,
   ) {}
 
   @EventPattern('bus')
   async sub(@Payload() message: Message, @Ctx() ctx: RmqContext) {
-    log(`${message.id} - Notifier received message`);
+    this.logger.log('Notifier received message', message.id);
 
     const responseStatus = await this.notificationService.notify(message);
 
@@ -34,7 +25,7 @@ export class NotificationController {
       return this.ack(ctx);
     }
 
-    log('nack');
+    this.logger.log('Message nacked', message.id);
     this.nack(ctx);
   }
 
